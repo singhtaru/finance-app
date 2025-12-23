@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+
+
+/* 
+
+:root {
+  --bg-main: #f6f8fb;
+  --bg-card: #ffffff;
+  --primary: #6c5dd3;
+  --secondary: #a5a6f6;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+*/
