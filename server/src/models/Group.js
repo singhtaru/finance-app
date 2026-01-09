@@ -22,6 +22,11 @@ const groupSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    baseCurrency: {
+      type: String,
+      default: "INR",
+      enum: ["INR", "USD", "EUR"], // Add more as needed
+    },
   },
   {
     timestamps: true,

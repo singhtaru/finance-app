@@ -35,12 +35,12 @@ export default function Settlement() {
 
   return (
     <Layout>
-      <h2 className="text-2xl font-semibold mb-6 text-[#03012C]">
+      <h2 className="text-3xl font-semibold mb-6 text-[#FFFBFA] text-center">
         Settlement Summary
       </h2>
 
       {Object.keys(balances).length === 0 ? (
-        <p className="text-gray-500">No settlement data available</p>
+        <p className="text-gray-400 text-center">No settlement data available</p>
       ) : (
         <div className="flex justify-center">
           <div className="w-full max-w-3xl space-y-6">

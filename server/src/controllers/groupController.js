@@ -5,7 +5,7 @@ import Group from "../models/Group.js";
 // @access  Private
 export const createGroup = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, baseCurrency } = req.body;
 
     // 1. Validate
     if (!name) {
@@ -21,6 +21,7 @@ export const createGroup = async (req, res) => {
       createdBy: req.user._id,
       members: [req.user._id],
       inviteCode,
+      baseCurrency: baseCurrency || "INR",
     });
 
     res.status(201).json({

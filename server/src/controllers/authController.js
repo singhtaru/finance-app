@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 
-const generateToken = (id) => {
+export const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
@@ -60,20 +60,22 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    console.log("USER FOUND:", user);
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log("PASSWORD MATCH:", isMatch);
-
-    res.status(200).json({
-      message: "Login successful",
-      token: generateToken(user._id),
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      console.log("LOGIN SUCCESS for:", email);
+      res.status(200).json({
+        message: "Login successful",
+        token: generateToken(user._id),
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        },
+      });
+    } else {
+      console.log("LOGIN FAILED: Invalid credentials");
+      res.status(401).json({ message: "Invalid credentials" });
+    }
   } catch (error) {
     console.error("LOGIN ERROR 👉", error);
     res.status(500).json({ message: "Server error" });

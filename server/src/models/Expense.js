@@ -21,15 +21,46 @@ const expenseSchema = new mongoose.Schema(
 
     splitBetween: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        amount: {
+          type: Number,
+          required: true,
+        },
+        paidStatus: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
 
+    splitType: {
+      type: String,
+      enum: ["EQUAL", "EXACT", "PERCENTAGE"],
+      default: "EQUAL",
+    },
+
+    category: {
+      type: String,
+      enum: ["Food", "Travel", "Rent", "Utilities", "Entertainment", "Other"],
+      default: "Other"
+    },
+    currency: {
+      type: String,
+      default: "INR"
+    },
+    originalAmount: {
+      type: Number,
+    },
+    exchangeRate: {
+      type: Number,
+      default: 1
+    },
     group: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Group",
-      required: true,
     },
   },
   {

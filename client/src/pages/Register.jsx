@@ -30,22 +30,27 @@ export default function Register() {
   };
 
   return (
-    <div className="h-screen w-screen bg-[#03012C] flex items-center justify-center">
+    <div className="min-h-screen w-full bg-[#F3F7F9] flex items-center justify-center font-sans p-4 py-8">
       <Card>
-        <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-semibold mb-8 text-[#03012C]">
-            Create Account
-          </h2>
+        <div className="flex flex-col items-center text-center p-4">
+
+          {/* Logo Section */}
+          <div className="flex flex-col items-center mb-8">
+            <h1 className="text-3xl font-bold text-[#FF6B6B] tracking-tight mb-2">Limitly</h1>
+            <h2 className="text-2xl font-bold text-[#1A1A1A]">Create Account</h2>
+            <p className="text-gray-500 text-sm mt-1">Join us to manage your expenses</p>
+          </div>
 
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-sm"
+            className="w-full flex flex-col gap-2"
           >
             <Input
               type="text"
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="bg-[#F0F2F5] focus:bg-white"
             />
 
             <Input
@@ -53,6 +58,7 @@ export default function Register() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="bg-[#F0F2F5] focus:bg-white"
             />
 
             <Input
@@ -60,25 +66,26 @@ export default function Register() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="bg-[#F0F2F5] focus:bg-white"
             />
 
             <Button
               type="submit"
-              className="w-full mt-2 py-2.5"
+              className="w-full mt-4 bg-[#FF6B6B] hover:bg-[#FF5252] text-white shadow-lg shadow-[#FF6B6B]/30 rounded-xl py-3 text-lg font-semibold transform hover:scale-[1.02] active:scale-95 transition-all duration-200"
             >
               Register
             </Button>
           </form>
 
-          <p className="text-sm text-[#03012C] mt-6">
-            Already have an account?{" "}
+          <div className="mt-8 flex flex-col items-center gap-3 w-full">
+            <p className="text-sm text-gray-500">Already have an account?</p>
             <Link
               to="/"
-              className="text-[#E16F7C] font-medium hover:underline"
+              className="w-full text-center py-3 rounded-xl bg-[#6C63FF] hover:bg-[#5a52d5] text-white font-semibold shadow-lg shadow-[#6C63FF]/30 transform hover:scale-[1.02] active:scale-95 transition-all duration-200"
             >
               Login
             </Link>
-          </p>
+          </div>
         </div>
       </Card>
     </div>
