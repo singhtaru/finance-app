@@ -131,7 +131,12 @@ export default function Login() {
 
             <div className="flex flex-col gap-4">
               <button
-                onClick={() => window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/google`}
+                onClick={() => {
+                  let url = import.meta.env.VITE_API_URL || "http://localhost:5000";
+                  if (url.endsWith("/")) url = url.slice(0, -1);
+                  if (!url.endsWith("/api")) url += "/api";
+                  window.location.href = `${url}/auth/google`;
+                }}
                 className="w-full flex items-center justify-center gap-3 bg-white text-[#03012C] py-3 rounded-xl hover:bg-gray-100 transition-all font-semibold"
               >
                 <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
