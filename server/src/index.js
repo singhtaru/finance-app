@@ -16,7 +16,10 @@ connectDB();
 configurePassport(); // Run config AFTER dotenv
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:5000", "https://finance-app-lkgu.onrender.com"], // Add your deployed frontend URL here
+  credentials: true
+}));
 app.use(express.json());
 app.use(passport.initialize()); // Initialize passport after app creation
 app.use("/api/auth", authRoutes);
@@ -28,7 +31,7 @@ app.use("/api/ai", aiRoutes);
 
 
 app.get("/", (req, res) => {
-  res.send("API running");
+  res.send("Backend is running");
 });
 
 const PORT = process.env.PORT || 5000;
