@@ -12,11 +12,12 @@ Limitly is a modern, full-stack finance application designed to help friends and
 ### 💰 Expense Tracking (Personal & Group)
 - **Personal Expenses**: Track your daily individual spending with categories and detailed insights.
 - **Group Expenses**: Log shared expenses, split bills (Equal/Exact/Percentage) with friends.
-- **Edit Functionality**: Easily modify expense details after creation.
+- **Full Control**: Edit or **Delete** expenses seamlessly (with permission checks).
 - **Smart Date Grouping**: View expenses organized by "Today", "Yesterday", and specific dates.
 
 ### 👥 Group Management
 - **Create & Join**: Create groups for trips or roommates, or join via invite code.
+- **Admin Controls**: Group creators can **Edit details** (currency, name) or **Delete** the group entirely.
 - **Settlements**: Automatically calculate debts and track who owes whom.
 - **Multi-Currency Support**: Handle expenses in INR, USD, EUR, etc., with automatic symbol display.
 
