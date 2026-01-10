@@ -32,7 +32,6 @@ app.use(cors({
   },
   credentials: true
 }));
-app.options(cors());
 app.use(express.json());
 app.use(passport.initialize()); // Initialize passport after app creation
 app.use("/api/auth", authRoutes);
