@@ -65,6 +65,7 @@ export default function Group() {
 
       if (currentGroup) {
         setMembers(currentGroup.members);
+        setCurrentGroup(currentGroup); // Save full group
         // Default split: all members (only if not editing)
         if (!editingExpense) {
           setSplitBetween(currentGroup.members.map((m) => m._id));
@@ -203,6 +204,22 @@ export default function Group() {
       console.error("Submit Error:", error);
       const msg = error.response?.data?.message || "Failed to save operation";
       alert(msg);
+    }
+  };
+
+  /* DELETE EXPENSE */
+  const handleDeleteExpense = async () => {
+    if (!editingExpense) return;
+    if (!window.confirm("Are you sure you want to delete this expense?")) return;
+
+    try {
+      await api.delete(`/expenses/${editingExpense._id}`);
+      setShowModal(false);
+      setEditingExpense(null);
+      fetchExpenses();
+    } catch (error) {
+      console.error("Delete Expense Error:", error);
+      alert("Failed to delete expense");
     }
   };
 
@@ -392,17 +409,28 @@ export default function Group() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <Button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="bg-gray-400 hover:bg-gray-500 !bg-none !shadow-none text-white px-6"
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" className="px-8 shadow-lg shadow-purple-500/20">
-                  {editingExpense ? "Update" : "Add"}
-                </Button>
+              <div className="flex justify-between items-center gap-3 pt-4 border-t border-gray-100">
+                {editingExpense && (
+                  <button
+                    type="button"
+                    onClick={handleDeleteExpense}
+                    className="text-red-500 hover:text-red-600 text-sm font-medium px-2"
+                  >
+                    Delete
+                  </button>
+                )}
+                <div className="flex gap-3 ml-auto">
+                  <Button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="bg-gray-400 hover:bg-gray-500 !bg-none !shadow-none text-white px-6"
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="px-8 shadow-lg shadow-purple-500/20">
+                    {editingExpense ? "Update" : "Add"}
+                  </Button>
+                </div>
               </div>
             </form>
           </Card>

@@ -16,6 +16,13 @@ export default function Dashboard() {
   const [baseCurrency, setBaseCurrency] = useState("INR");
   const [budgetData, setBudgetData] = useState(null);
 
+  // Edit group state
+  const [showEditGroupModal, setShowEditGroupModal] = useState(false);
+  const [editingGroupId, setEditingGroupId] = useState(null);
+  const [editGroupName, setEditGroupName] = useState("");
+  const [editBaseCurrency, setEditBaseCurrency] = useState("INR");
+  const [currentUser, setCurrentUser] = useState(null);
+
   // Join group state
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [inviteCode, setInviteCode] = useState("");
@@ -46,6 +53,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
     fetchGroups();
     fetchBudget();
   }, []);
@@ -90,6 +101,51 @@ export default function Dashboard() {
       fetchGroups();
     } catch (error) {
       alert("Invalid invite code");
+    }
+  }
+
+
+  // EDIT GROUP
+  const openEditGroupModal = (group, e) => {
+    e.stopPropagation(); // Prevent card navigation
+    setEditingGroupId(group._id);
+    setEditGroupName(group.name);
+    setEditBaseCurrency(group.baseCurrency);
+    setShowEditGroupModal(true);
+  };
+
+  const handleUpdateGroup = async (e) => {
+    e.preventDefault();
+    try {
+      await api.put(
+        `/groups/${editingGroupId}`,
+        { name: editGroupName, baseCurrency: editBaseCurrency },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setShowEditGroupModal(false);
+      fetchGroups(); // Refresh list
+    } catch (error) {
+      console.error("Update Group Error:", error);
+      alert("Failed to update group");
+    }
+  };
+
+  const handleDeleteGroup = async () => {
+    if (!window.confirm("Are you sure you want to delete this group? This cannot be undone.")) return;
+
+    try {
+      await api.delete(`/groups/${editingGroupId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setShowEditGroupModal(false);
+      fetchGroups();
+    } catch (error) {
+      console.error("Delete Group Error:", error);
+      alert("Failed to delete group");
     }
   };
 
@@ -167,6 +223,17 @@ export default function Dashboard() {
                     Tap to view expenses
                   </p>
                 </div>
+
+                {/* Edit Button for Owner */}
+                {currentUser && String(group.createdBy?._id || group.createdBy) === String(currentUser.id) && (
+                  <button
+                    onClick={(e) => openEditGroupModal(group, e)}
+                    className="absolute top-3 right-3 text-gray-400 hover:text-[#6C63FF] p-2 rounded-full transition-all"
+                    title="Edit Group"
+                  >
+                    ✏️
+                  </button>
+                )}
               </Card>
             ))}
           </div>
@@ -238,6 +305,57 @@ export default function Dashboard() {
                   Cancel
                 </Button>
                 <Button type="submit">Join</Button>
+              </div>
+            </form>
+          </Card>
+        </div>
+      )}
+
+      {/* EDIT GROUP MODAL */}
+      {showEditGroupModal && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
+          <Card>
+            <h3 className="text-xl font-semibold mb-4 text-[#03012C]">
+              Edit Group
+            </h3>
+
+            <form onSubmit={handleUpdateGroup}>
+              <Input
+                placeholder="Group name"
+                value={editGroupName}
+                onChange={(e) => setEditGroupName(e.target.value)}
+                className="bg-[#F0F2F5] mb-4"
+              />
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1 text-[#03012C]">Base Currency</label>
+                <select
+                  value={editBaseCurrency}
+                  onChange={(e) => setEditBaseCurrency(e.target.value)}
+                  className="w-full p-3 rounded-xl bg-[#F0F2F5] border-none outline-none text-gray-700"
+                >
+                  {["INR", "USD", "EUR"].map(curr => (
+                    <option key={curr} value={curr}>{curr}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex justify-between items-center gap-3 pt-4 border-t border-gray-100 mt-4">
+                <button
+                  type="button"
+                  onClick={handleDeleteGroup}
+                  className="group flex items-center gap-2 text-gray-400 hover:text-red-500 transition-all text-sm font-medium px-3 py-2 rounded-lg hover:bg-red-50"
+                  title="Delete Group"
+                >
+                  <span className="grayscale group-hover:grayscale-0 transition-all opacity-70 group-hover:opacity-100">🗑️</span>
+                  <span>Delete</span>
+                </button>
+                <div className="flex gap-3">
+                  <Button type="button" onClick={() => setShowEditGroupModal(false)} className="bg-gray-400 hover:bg-gray-500 !bg-none !shadow-none text-white">
+                    Cancel
+                  </Button>
+                  <Button type="submit">Save Changes</Button>
+                </div>
               </div>
             </form>
           </Card>

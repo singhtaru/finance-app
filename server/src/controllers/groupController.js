@@ -89,3 +89,66 @@ export const getMyGroups = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// @desc    Update group details
+// @route   PUT /api/groups/:id
+// @access  Private
+export const updateGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, baseCurrency } = req.body;
+
+    const group = await Group.findById(id);
+
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+
+    // Check if user is the creator
+    if (!group.createdBy.equals(req.user._id)) {
+      return res.status(403).json({ message: "Not authorized to edit this group" });
+    }
+
+    group.name = name || group.name;
+    group.baseCurrency = baseCurrency || group.baseCurrency;
+
+    const updatedGroup = await group.save();
+
+    res.status(200).json({
+      message: "Group updated successfully",
+      group: updatedGroup,
+    });
+  } catch (error) {
+    console.error("UPDATE GROUP ERROR 👉", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// @desc    Delete group
+// @route   DELETE /api/groups/:id
+// @access  Private
+export const deleteGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const group = await Group.findById(id);
+
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+
+    // Check if user is the creator
+    if (!group.createdBy.equals(req.user._id)) {
+      return res.status(403).json({ message: "Not authorized to delete this group" });
+    }
+
+    await group.deleteOne();
+
+    res.status(200).json({
+      message: "Group deleted successfully",
+      id
+    });
+  } catch (error) {
+    console.error("DELETE GROUP ERROR 👉", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

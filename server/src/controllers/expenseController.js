@@ -320,3 +320,29 @@ export const getPersonalExpenses = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch personal expenses" });
   }
 };
+
+// @desc    Delete expense
+// @route   DELETE /api/expenses/:id
+// @access  Private
+export const deleteExpense = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const expense = await Expense.findById(id);
+
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    // CHECK OWNERSHIP
+    if (!expense.paidBy.equals(req.user._id)) {
+      return res.status(403).json({ message: "Not authorized to delete this expense" });
+    }
+
+    await expense.deleteOne();
+
+    res.status(200).json({ message: "Expense deleted successfully", id });
+  } catch (error) {
+    console.error("DELETE EXPENSE ERROR 👉", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
