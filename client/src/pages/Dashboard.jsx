@@ -6,6 +6,7 @@ import Card from "../components/Card";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import PersonalExpenseSection from "../components/PersonalExpenseSection";
+import { getCurrencySymbol } from "../utils/currency";
 
 export default function Dashboard() {
   const [groups, setGroups] = useState([]);
@@ -268,7 +269,7 @@ export default function Dashboard() {
                   className="w-full p-3 rounded-xl bg-[#F0F2F5] border-none outline-none text-gray-700"
                 >
                   {["INR", "USD", "EUR"].map(curr => (
-                    <option key={curr} value={curr}>{curr}</option>
+                    <option key={curr} value={curr}>{curr} {getCurrencySymbol(curr)}</option>
                   ))}
                 </select>
               </div>
@@ -335,7 +336,7 @@ export default function Dashboard() {
                   className="w-full p-3 rounded-xl bg-[#F0F2F5] border-none outline-none text-gray-700"
                 >
                   {["INR", "USD", "EUR"].map(curr => (
-                    <option key={curr} value={curr}>{curr}</option>
+                    <option key={curr} value={curr}>{curr} {getCurrencySymbol(curr)}</option>
                   ))}
                 </select>
               </div>

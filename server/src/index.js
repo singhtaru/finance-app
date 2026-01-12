@@ -19,7 +19,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5000",
-  "https://limitly-user.onrender.com"
+  "https://limitly-user.onrender.com",
+  process.env.CLIENT_URL // Add configured client URL
 ];
 
 app.use(cors({

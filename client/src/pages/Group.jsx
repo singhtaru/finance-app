@@ -317,7 +317,7 @@ export default function Group() {
                     className="w-full p-3 rounded-xl bg-[#F0F2F5] border-none outline-none text-gray-700 text-sm h-[46px]"
                   >
                     {["INR", "USD", "EUR"].map(curr => (
-                      <option key={curr} value={curr}>{curr}</option>
+                      <option key={curr} value={curr}>{curr} {getCurrencySymbol(curr)}</option>
                     ))}
                   </select>
                 </div>
@@ -389,7 +389,7 @@ export default function Group() {
                         {/* Custom Amount Input */}
                         {splitType === "EXACT" && isChecked && (
                           <div className="flex items-center gap-1 border-l pl-3 ml-2">
-                            <span className="text-gray-500 text-xs">₹</span>
+                            <span className="text-gray-500 text-xs">{getCurrencySymbol(currency)}</span>
                             <input
                               type="number"
                               placeholder="0"

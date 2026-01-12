@@ -249,7 +249,7 @@ export default function PersonalExpenseSection() {
                                     onChange={e => setCurrency(e.target.value)}
                                     className="px-4 py-2.5 rounded-xl bg-[#F0F2F5] border-none outline-none text-gray-700 w-1/3"
                                 >
-                                    {["INR", "USD", "EUR"].map(c => <option key={c} value={c}>{c}</option>)}
+                                    {["INR", "USD", "EUR"].map(c => <option key={c} value={c}>{c} {getCurrencySymbol(c)}</option>)}
                                 </select>
                                 <Input
                                     type="number"
