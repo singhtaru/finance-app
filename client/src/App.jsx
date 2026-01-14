@@ -1,67 +1,72 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Group from "./pages/Group";
+
+const Register = lazy(() => import("./pages/Register"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Group = lazy(() => import("./pages/Group"));
+const Settlement = lazy(() => import("./pages/Settlement"));
+const Profile = lazy(() => import("./pages/Profile"));
+const AIAssistant = lazy(() => import("./pages/AIAssistant"));
+
 import ProtectedRoute from "./components/ProtectedRoute";
-import Settlement from "./pages/Settlement";
-import Profile from "./pages/Profile";
-import AIAssistant from "./pages/AIAssistant";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-[#03012C] font-semibold">Loading...</div>}>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Protected routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/groups/:id"
-          element={
-            <ProtectedRoute>
-              <Group />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/groups/:id"
+            element={
+              <ProtectedRoute>
+                <Group />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/settlement/:id"
-          element={
-            <ProtectedRoute>
-              <Settlement />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/settlement/:id"
+            element={
+              <ProtectedRoute>
+                <Settlement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/ai-assistant"
-          element={
-            <ProtectedRoute>
-              <AIAssistant />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/ai-assistant"
+            element={
+              <ProtectedRoute>
+                <AIAssistant />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
