@@ -28,7 +28,7 @@ router.get(
     (req, res) => {
         const token = generateToken(req.user._id);
         // Redirect to client with token
-        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        const clientUrl = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "");
         console.log("Redirecting to client URL:", clientUrl);
         res.redirect(`${clientUrl}?token=${token}`);
     }

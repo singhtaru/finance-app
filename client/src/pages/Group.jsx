@@ -44,6 +44,7 @@ export default function Group() {
   /* AUTH USER */
   // Retrieve stored user. Note: Login stores { id, name, email }
   const [currentUser, setCurrentUser] = useState(null);
+  const [currentGroup, setCurrentGroup] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -228,6 +229,29 @@ export default function Group() {
       <h2 className="text-4xl font-semibold mb-6 text-[#FFFBFA] flex justify-center">
         Group Expenses
       </h2>
+
+      {/* INVITE CODE */}
+      {currentGroup && (
+        <div className="flex justify-center mb-6">
+          <div className="bg-[#FFFFFF]/10 backdrop-blur-md rounded-full px-5 py-2 flex items-center gap-3 border border-white/20 shadow-xl">
+            <span className="text-gray-300 text-sm font-medium">Invite Code:</span>
+            <span className="text-[#FF6B6B] font-bold tracking-wider">{currentGroup.inviteCode}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(currentGroup.inviteCode);
+                alert("Invite code copied!");
+              }}
+              className="ml-2 text-white hover:text-[#6C63FF] transition-colors"
+              title="Copy Code"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ACTIONS */}
       <div className="flex gap-4 mb-6 justify-center">
