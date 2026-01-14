@@ -19,6 +19,7 @@ const configurePassport = () => {
                 callbackURL: `${process.env.SERVER_URL || "http://localhost:5000"}/api/auth/google/callback`,
             },
             async (accessToken, refreshToken, profile, done) => {
+                console.log("Using Callback URL:", `${process.env.SERVER_URL || "http://localhost:5000"}/api/auth/google/callback`);
                 try {
                     console.log("Google Profile:", profile);
 
