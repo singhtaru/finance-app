@@ -8,7 +8,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const callGroqAPI = async (messages, responseFormat = null) => {
     try {
         const payload = {
-            model: "llama-3.3-70b-versatile",
+            model: "openai/gpt-oss-20b",
             messages: messages,
             temperature: 1,
             max_completion_tokens: 1024,
