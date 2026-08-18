@@ -38,7 +38,7 @@ export const generateInsights = async (spendingData) => {
     try {
         const systemPrompt = `
       Analyze the provided spending data and return a JSON object with a key "insights" containing an array of 3 strings.
-      Analyze transaction patterns and generate personalized savings recommendations suitable for Llama 3 analysis.
+      Analyze transaction patterns and generate personalized savings recommendations.
       Each string should be a concise, actionable saving tip or insight based on their actual spending habits.
       Example Output: { "insights": ["Consider cooking on weekends to save on dining out.", "You can save ~10% by booking travel in advance.", "Review unused subscriptions to cut monthly costs."] }
     `;
