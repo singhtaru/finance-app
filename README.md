@@ -22,9 +22,10 @@ Limitly is a modern, full-stack finance application designed to help friends and
 - **Multi-Currency Support**: Handle expenses in INR, USD, EUR, etc., with automatic symbol display.
 
 ### 🤖 AI-Powered Assistant (Groq)
-- **Financial Insights**: Get smart analysis of your spending habits powered by **Llama 3 (via Groq)**.
+- **Financial Insights**: Get smart analysis of your spending habits powered by **OpenAI GPT-OSS 20B (via Groq)**.
 - **Budget Advice**: Receive personalized tips to stay within your monthly budget.
-- **Smart Chat**: Ask financial questions and get instant, context-aware answers.
+- **Smart Chat**: Ask personal-finance questions and get instant, context-aware answers based on your recent expenses.
+- **Finance-Only Scope**: The assistant answers questions about personal finance, budgeting, expenses, saving, debt, and the supplied expense data. For unrelated requests, it directs users back to these topics.
 
 ### 📱 Premium UI/UX
 - **Modern Design**: Sleek Dark/Light theme usage with Glassmorphism effects.
@@ -45,7 +46,7 @@ Limitly is a modern, full-stack finance application designed to help friends and
 - MongoDB (Database)
 - Mongoose (CDM)
 - Passport.js (Google Auth)
-- Groq SDK / Axios (AI Integration)
+- Groq API / Axios (OpenAI GPT-OSS 20B AI integration)
 - JSON Web Token (JWT)
 
 ## ⚡ Getting Started
